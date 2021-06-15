@@ -1,4 +1,4 @@
-/* global Handlebars, utils, dataSource */ // npmeslint-disable-line no-unused-vars
+/* global Handlebars, utils, */ // npmeslint-disable-line no-unused-vars
 
 {
   'use strict'; // 
@@ -52,6 +52,7 @@
       remove: '[href="#remove"]',
     },
     // CODE ADDED END
+
   };
   
   const classNames = {
@@ -71,12 +72,15 @@
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    }, // CODE CHANGED
-    // CODE ADDED START
+    }, 
     cart: {
       defaultDeliveryFee: 20,
     },
-    // CODE ADDED END
+    db: {
+      url: '//localhost:3131',
+      products: 'products',
+      orders: 'orders',
+    },
   };
   
   const templates = {
@@ -495,10 +499,15 @@
       const thisCartProduct = this;
 
       thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
-      // console.log('thisCartProduct.amountWidget:', thisCartProduct.amountWidget, 'thisCartProduct.amount:', thisCartProduct.amount, 'thisCartProduct.dom.amountWidget:', thisCartProduct.dom.amountWidget, 'thisCartProduct.dom.price:', thisCartProduct.dom.price);
+      console.log('thisCartProduct.amountWidget:', thisCartProduct.amountWidget, 'thisCartProduct.amount:', thisCartProduct.amount, 'thisCartProduct.dom.amountWidget:', thisCartProduct.dom.amountWidget, 'thisCartProduct.dom.price:', thisCartProduct.dom.price);
+      console.log('szukajka:', thisCartProduct.dom.amountWidget.querySelector(select.widgets.amount.input));
       
+      thisCartProduct.dom.amountWidget.querySelector(select.widgets.amount.input).innerHTML = thisCartProduct.amount;
       thisCartProduct.dom.amountWidget.addEventListener('updated', function() {
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        
+        thisCartProduct.dom.amountWidget.querySelector(select.widgets.amount.input).innerHTML = thisCartProduct.amount;
+
         thisCartProduct.price = thisCartProduct.amount * thisCartProduct.priceSingle;
         thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
       }); 
@@ -541,7 +550,9 @@
       // console.log('thisApp.data:', thisApp.data);
 
       for(let productData in thisApp.data.products){
-        new Product(productData, thisApp.data.products[productData]);
+        // new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
+
       }
 
     },
@@ -549,7 +560,24 @@
     initData: function(){
       const thisApp = this;
 
-      thisApp.data = dataSource;
+      thisApp.data = {};
+
+      const url = settings.db.url + '/' + settings.db.products;
+
+      fetch(url)
+        .then(function(rawResponse){
+          return rawResponse.json();
+        })
+        .then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+
+          /* save parsedResponse as thisApp.data.products */
+          thisApp.data.products = parsedResponse;
+          /* execute initMenu method */
+          thisApp.initMenu();
+        });
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
+
     },
 
     initCart: function(){
@@ -569,7 +597,6 @@
       //console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
       thisApp.initCart();
     },
   };
