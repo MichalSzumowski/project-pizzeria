@@ -46,7 +46,6 @@ const app = {
 
     const cartElem = document.querySelector(select.containerOf.cart);
     thisApp.cart = new Cart(cartElem);
-
     thisApp.productList = document.querySelector(select.containerOf.menu);
     
     thisApp.productList.addEventListener('add-to-cart', function(event){
