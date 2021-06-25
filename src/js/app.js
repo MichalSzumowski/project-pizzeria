@@ -1,6 +1,7 @@
 import {settings, select, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 
 
@@ -57,6 +58,18 @@ const app = {
         link.getAttribute('href') == '#' + pageId
       );
     }
+  },
+
+  initBooking: function(){
+    const thisApp = this;
+    /* find booking widget container */
+    thisApp.bookingContainer = document.querySelector(select.containerOf.booking);
+    /* create new instance of booking class */
+    thisApp.booking = new Booking(thisApp.bookingContainer);
+
+    console.log(thisApp.booking, thisApp.bookingContainer);
+
+  
   },
 
   initMenu: function(){
@@ -117,7 +130,7 @@ const app = {
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
-    
+    thisApp.initBooking();
   },
 };
 
