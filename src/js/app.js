@@ -67,7 +67,7 @@ const app = {
     /* create new instance of booking class */
     thisApp.booking = new Booking(thisApp.bookingContainer);
 
-    console.log(thisApp.booking, thisApp.bookingContainer);
+    //console.log(thisApp.booking, thisApp.bookingContainer);
 
   
   },
