@@ -46,6 +46,7 @@
   flex: 1;
   padding-left: $base-size * 3;
   font-weight: $font-bold;
+
   p {
     font-family: $font-text;
     font-weight: $font-light;
@@ -70,6 +71,7 @@
   overflow: hidden;
   position: relative;
   border-radius: 4px;
+  
   img {
     width: 100%;
     height: 100%;
@@ -84,7 +86,7 @@
     transform: translate(-50%, -50%);
     margin: 0 0 $base-size 0;
     font-size: ($base-size * 2);
-    font-family: $font-header !important;
+    font-family: $font-header;
     font-weight: $font-light;
     text-transform: uppercase;
     transition: $transition;
