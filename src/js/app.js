@@ -36,7 +36,6 @@ const app = {
         thisApp.activatePage(id);
         /* change url hash */
         window.location.hash = '#/' + id;
-
       });
     }
   },

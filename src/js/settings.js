@@ -68,7 +68,7 @@ export const select = {
     starters: 'input[type="checkbox"]',
   },
   nav: {
-    links: '.main-nav a',
+    links: '.main-nav a, .choose-tile a',
   },
   
 
